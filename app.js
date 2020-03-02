@@ -17,12 +17,13 @@ const Model = (function() {
 
     const resetGameState = function() {
         state.board = emtpyBoard.slice();
-        currentPlayer = 'X';
+        state.currentPlayer = 'X';
     };
 
     const makeMove = function(row, column) {
         state.board[row][column] = state.currentPlayer;
-        state.currentPlayer = state.currentPlayer = 'X' ? 'O' : 'X';
+        View.updateSquare(row, column, state.currentPlayer);
+        state.currentPlayer = state.currentPlayer === 'X' ? 'O' : 'X';
     };
     
     return {
@@ -37,16 +38,17 @@ const Model = (function() {
 /***********************************/
 
 const View = (function() {
-    let _node;
-    const initialize = function(node) {
-        _node = node;
+    let node;
+    let squareNodes;
+    const initialize = function(_node) {
+        node = _node;
         
         /* TODO: Fix whitespace issue between squares */
         const gameView = `
         <div class="tic-tac-toe">
             <button class='new-game'>New Game</button>
             <div class='board'>
-                <div class='row''>
+                <div class='row'>
                     <div class='square' data-row='0' data-column='0'></div>
                     <div class='square' data-row='0' data-column='1'></div>
                     <div class='square' data-row='0' data-column='2'></div>
@@ -80,21 +82,34 @@ const View = (function() {
         
         node.insertAdjacentHTML('beforeend', gameStyle);
         node.insertAdjacentHTML('beforeend', gameView);
+
+        squareNodes = node.querySelectorAll('.square');
+
         
         console.log('Initalized View');
     }
     
+    const updateSquare = function(row, column, text) {
+        let squareIndex = flattenedIndex(row, column, 3);
+        squareNodes[squareIndex].innerText = text;
+    }
+    
     /**
-     * Renders a new board to given node.
-     * If no node is passed, renders to initialized node.
-     * @param {HTMLElement} node 
+     * 
+     * @param {Number} i Outer index 
+     * @param {Number} j Inner index
+     * @param {Number} n Length of outer array
      */
-    const newBoard = function(node = _node) {
-        console.log('Rendered new board');
+    const flattenedIndex = function(i, j, n) {
+        i = Number(i);
+        j = Number(j);
+        n = Number(n);
+        return i * n + j;
     }
     
     return {
         initialize,
+        updateSquare
     };
 })();
 
