@@ -40,20 +40,20 @@ const View = (function() {
         <div class="tic-tac-toe">
             <button class='new-game'>New Game</button>
             <div class='board'>
-                <div class='row'>
-                    <div class='square 1'></div>
-                    <div class='square 2'></div>
-                    <div class='square 3'></div>
+                <div class='row' data-row='0'>
+                    <div class='square' data-column='0'></div>
+                    <div class='square' data-column='1'></div>
+                    <div class='square' data-column='2'></div>
                 </div>
-                <div class='row'>
-                    <div class='square 4'></div>
-                    <div class='square 5'></div>
-                    <div class='square 6'></div>
+                <div class='row' data-row='1'>
+                    <div class='square' data-column='0'></div>
+                    <div class='square' data-column='1'></div>
+                    <div class='square' data-column='2'></div>
                 </div>
-                <div class='row'>
-                    <div class='square 7'></div>
-                    <div class='square 8'></div>
-                    <div class='square 9'></div>
+                <div class='row' data-row='2'>
+                    <div class='square' data-column='0'></div>
+                    <div class='square' data-column='1'></div>
+                    <div class='square' data-column='2'></div>
                 </div>
             </div>
         </div>
