@@ -35,11 +35,30 @@ const View = (function() {
     const initialize = function(node) {
         _node = node;
 
-        const resetButton = document.createElement('button');
-        resetButton.setAttribute('class', 'new-game');
-        resetButton.innerText = 'New Game';
+        const gameView = `
+        <div class="tic-tac-toe">
+            <button class='new-game'>New Game</button>
+            <div class='board'>
+                <div class='row'>
+                    <div class='square'></div>
+                    <div class='square'></div>
+                    <div class='square'></div>
+                </div>
+                <div class='row'>
+                    <div class='square'></div>
+                    <div class='square'></div>
+                    <div class='square'></div>
+                </div>
+                <div class='row'>
+                    <div class='square'></div>
+                    <div class='square'></div>
+                    <div class='square'></div>
+                </div>
+            </div>
+        </div>
+        `
 
-        node.appendChild(resetButton);
+        node.insertAdjacentHTML('beforeend', gameView);
         
         console.log('Initalized View');
     }
