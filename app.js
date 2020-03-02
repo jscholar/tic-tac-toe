@@ -33,6 +33,13 @@ const View = (function() {
     let _node;
     const initialize = function(node) {
         _node = node;
+
+        const resetButton = document.createElement('button');
+        resetButton.setAttribute('class', 'new-game');
+        resetButton.innerText = 'New Game';
+
+        node.appendChild(resetButton);
+        
         console.log('Initalized View');
     }
     
