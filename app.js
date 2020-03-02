@@ -3,9 +3,22 @@
 /***********************************/
 
 const Model = (function() {
+    const state = {};
+    const emtpyBoard = [
+        [null, null, null],
+        [null, null, null],
+        [null, null, null],
+    ]
+    
     const initialize = function() {
+        resetGame();
         console.log('Initalized Model');
     };
+
+    const resetGameState = function() {
+        state.board = emtpyBoard.slice();
+        nextTurnPlayer = 'X';
+    }
     
     return {
         initialize
