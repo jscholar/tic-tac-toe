@@ -5,9 +5,9 @@
 const Model = (function() {
     const state = {};
     const emtpyBoard = [
-        [null, null, null],
-        [null, null, null],
-        [null, null, null],
+        ['', '', ''],
+        ['', '', ''],
+        ['', '', ''],
     ]
     
     const initialize = function() {
@@ -17,12 +17,18 @@ const Model = (function() {
 
     const resetGameState = function() {
         state.board = emtpyBoard.slice();
-        nextTurnPlayer = 'X';
-    }
+        currentPlayer = 'X';
+    };
+
+    const makeMove = function(row, column) {
+        state.board[row][column] = state.currentPlayer;
+        state.currentPlayer = state.currentPlayer = 'X' ? 'O' : 'X';
+    };
     
     return {
         initialize,
-        resetGameState
+        resetGameState,
+        makeMove
     };
 })();
 
@@ -115,8 +121,9 @@ const Controller = (function() {
         if (event.target.innerText !== 'X' || event.target.innerText !== 'O') {
             let {row, column} = event.target.dataset;
             console.log(`Click on ${row}, ${column}`);
+            Model.makeMove(row, column);
         }
-    }
+    };
     
     return {
         initialize
