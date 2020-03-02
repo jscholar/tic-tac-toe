@@ -40,20 +40,20 @@ const View = (function() {
         <div class="tic-tac-toe">
             <button class='new-game'>New Game</button>
             <div class='board'>
-                <div class='row' data-row='0'>
-                    <div class='square' data-column='0'></div>
-                    <div class='square' data-column='1'></div>
-                    <div class='square' data-column='2'></div>
+                <div class='row''>
+                    <div class='square' data-row='0' data-column='0'></div>
+                    <div class='square' data-row='0' data-column='1'></div>
+                    <div class='square' data-row='0' data-column='2'></div>
                 </div>
-                <div class='row' data-row='1'>
-                    <div class='square' data-column='0'></div>
-                    <div class='square' data-column='1'></div>
-                    <div class='square' data-column='2'></div>
+                <div class='row'>
+                    <div class='square' data-row='1' data-column='0'></div>
+                    <div class='square' data-row='1' data-column='1'></div>
+                    <div class='square' data-row='1' data-column='2'></div>
                 </div>
-                <div class='row' data-row='2'>
-                    <div class='square' data-column='0'></div>
-                    <div class='square' data-column='1'></div>
-                    <div class='square' data-column='2'></div>
+                <div class='row'>
+                    <div class='square' data-row='2' data-column='0'></div>
+                    <div class='square' data-row='2' data-column='1'></div>
+                    <div class='square' data-row='2' data-column='2'></div>
                 </div>
             </div>
         </div>
@@ -104,8 +104,19 @@ const Controller = (function() {
                 console.log('New Game');
                 Model.resetGameState();
             });
+
+        node.querySelectorAll('.square').forEach(squareNode => {
+            squareNode.addEventListener('click', squareClickHandler);
+        })
         console.log('Initalized Controller');
     };
+
+    const squareClickHandler = function(event) {
+        if (event.target.innerText !== 'X' || event.target.innerText !== 'O') {
+            let {row, column} = event.target.dataset;
+            console.log(`Click on ${row}, ${column}`);
+        }
+    }
     
     return {
         initialize
