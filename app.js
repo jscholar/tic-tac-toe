@@ -11,7 +11,7 @@ const Model = (function() {
     ]
     
     const initialize = function() {
-        resetGame();
+        resetGameState();
         console.log('Initalized Model');
     };
 
@@ -21,7 +21,8 @@ const Model = (function() {
     }
     
     return {
-        initialize
+        initialize,
+        resetGameState
     };
 })();
 
@@ -64,6 +65,11 @@ const View = (function() {
 const Controller = (function() {
     
     const initialize = function(node) {
+        node.querySelector('.new-game')
+            .addEventListener('click', (event) => {
+                console.log('New Game');
+                Model.resetGameState();
+            });
         console.log('Initalized Controller');
     };
     
