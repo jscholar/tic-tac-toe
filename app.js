@@ -135,7 +135,7 @@ const Controller = (function() {
     };
 
     const squareClickHandler = function(event) {
-        if (event.target.innerText !== 'X' || event.target.innerText !== 'O') {
+        if (event.target.innerText !== 'X' && event.target.innerText !== 'O') {
             let {row, column} = event.target.dataset;
             console.log(`Click on ${row}, ${column}`);
             Model.makeMove(row, column);
