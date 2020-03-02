@@ -3,7 +3,13 @@
 /***********************************/
 
 const Model = (function() {
-    return {};
+    const initialize = function() {
+        console.log('Initalized Model');
+    };
+    
+    return {
+        initialize
+    };
 })();
 
 /***********************************/
@@ -12,15 +18,11 @@ const Model = (function() {
 
 const View = (function() {
     let _node;
-    /**
-     * Initializes Tic Tac Toe view on given node.
-     * @param {HTMLElement} [node=body]
-     */
-    const initialize = function(node = document.querySelector('body')) {
+    const initialize = function(node) {
         _node = node;
-        newBoard();
+        console.log('Initalized View');
     }
-
+    
     /**
      * Renders a new board to given node.
      * If no node is passed, renders to initialized node.
@@ -32,7 +34,6 @@ const View = (function() {
     
     return {
         initialize,
-        newBoard
     };
 })();
 
@@ -40,23 +41,36 @@ const View = (function() {
 /*******      CONTROLLER     *******/
 /***********************************/
 
-const Contoller = (function() {
-    return {};
-})();
-
-/**********************************/
-
-const App = (function() {
-
-    const initialize = function() {
-        const appNode = document.getElementById('app');
-        View.initialize(appNode);
-        console.log('Tic-tac-toe has initialized');
-    }
-
+const Controller = (function() {
+    
+    const initialize = function(node) {
+        console.log('Initalized Controller');
+    };
+    
     return {
         initialize
     };
 })();
 
-App.initialize();
+/**********************************/
+
+const App = (function() {
+    
+    /**
+     * Initializes Tic Tac Toe on given node.
+     * @param {HTMLElement} [node=body]
+     */
+    const initialize = function(node = document.querySelector('body')) {
+        Model.initialize();
+        View.initialize(node);
+        Controller.initialize(node);
+        console.log('Tic-tac-toe has initialized');
+    }
+    
+    return {
+        initialize
+    };
+})();
+
+const appNode = document.getElementById('app');
+App.initialize(appNode);
