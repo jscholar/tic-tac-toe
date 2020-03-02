@@ -43,7 +43,6 @@ const View = (function() {
     const initialize = function(_node) {
         node = _node;
         
-        /* TODO: Fix whitespace issue between squares */
         const gameView = `
         <div class="tic-tac-toe">
             <button class='new-game'>New Game</button>
@@ -69,13 +68,17 @@ const View = (function() {
 
         const gameStyle = `
             <style type="text/css">
+                .row {
+                    display: flex;
+                }
                 .square {
-                    display: inline-block;
                     border: 1px solid black;
                     height: 50px;
+                    line-height: 50px;
                     width: 50px;
                     margin: 0;
                     padding: 0;
+                    text-align: center;
                 }
             </style>
         `
@@ -90,17 +93,16 @@ const View = (function() {
     }
     
     const updateSquare = function(row, column, text) {
-        let squareIndex = flattenedIndex(row, column, 3);
+        let squareIndex = flattenIndex(row, column, 3);
         squareNodes[squareIndex].innerText = text;
     }
     
     /**
-     * 
      * @param {Number} i Outer index 
      * @param {Number} j Inner index
      * @param {Number} n Length of outer array
      */
-    const flattenedIndex = function(i, j, n) {
+    const flattenIndex = function(i, j, n) {
         i = Number(i);
         j = Number(j);
         n = Number(n);
