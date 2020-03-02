@@ -34,30 +34,45 @@ const View = (function() {
     let _node;
     const initialize = function(node) {
         _node = node;
-
+        
+        /* TODO: Fix whitespace issue between squares */
         const gameView = `
         <div class="tic-tac-toe">
             <button class='new-game'>New Game</button>
             <div class='board'>
                 <div class='row'>
-                    <div class='square'></div>
-                    <div class='square'></div>
-                    <div class='square'></div>
+                    <div class='square 1'></div>
+                    <div class='square 2'></div>
+                    <div class='square 3'></div>
                 </div>
                 <div class='row'>
-                    <div class='square'></div>
-                    <div class='square'></div>
-                    <div class='square'></div>
+                    <div class='square 4'></div>
+                    <div class='square 5'></div>
+                    <div class='square 6'></div>
                 </div>
                 <div class='row'>
-                    <div class='square'></div>
-                    <div class='square'></div>
-                    <div class='square'></div>
+                    <div class='square 7'></div>
+                    <div class='square 8'></div>
+                    <div class='square 9'></div>
                 </div>
             </div>
         </div>
-        `
+        `;
 
+        const gameStyle = `
+            <style type="text/css">
+                .square {
+                    display: inline-block;
+                    border: 1px solid black;
+                    height: 50px;
+                    width: 50px;
+                    margin: 0;
+                    padding: 0;
+                }
+            </style>
+        `
+        
+        node.insertAdjacentHTML('beforeend', gameStyle);
         node.insertAdjacentHTML('beforeend', gameView);
         
         console.log('Initalized View');
