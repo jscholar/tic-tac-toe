@@ -21,7 +21,7 @@ const Model = (function() {
         // Deep copy the empty board
         state.board = JSON.parse(JSON.stringify(emtpyBoard));
 
-        state.currentPlayer = 'X';
+        state.currentPlayer = state.currentPlayer === 'X' ? 'O' : 'X';
         state.finished = false;
         state.movesPlayed = 0;
         View.resetView();
@@ -225,6 +225,7 @@ const Controller = (function() {
 
         node.querySelector('.board')
             .addEventListener('click', squareClickHandler);
+
         console.log('Initalized Controller');
     };
 
