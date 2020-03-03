@@ -24,7 +24,7 @@ const Model = (function() {
         state.currentPlayer = 'X';
         state.finished = false;
         state.movesPlayed = 0;
-        View.updateBoard(state.board);
+        View.resetView();
     };
 
     const makeMove = function(row, column) {
@@ -38,10 +38,12 @@ const Model = (function() {
             let waysWon = checkWinningBoard(state.board, row, column, state.currentPlayer);
             if (waysWon.length > 0) {
                 // Won game
+                View.displayOutcome(state.currentPlayer);
                 state.finished = true;
             } else {
                 if (state.movesPlayed === 9) {
                     console.log('Game has drawn');
+                    View.displayOutcome('draw');
                     state.finished = true;
                 } else {
                     state.currentPlayer = state.currentPlayer === 'X' ? 'O' : 'X';
@@ -117,12 +119,16 @@ const Model = (function() {
 const View = (function() {
     let node;
     let squareNodes;
+    let winnerNode;
     const initialize = function(_node) {
         node = _node;
         
         const gameView = `
         <div class="tic-tac-toe">
             <button class='new-game'>New Game</button>
+            <div class='stats'>
+                <div class='winner'></div>
+            </div>
             <div class='board'>
                 <div class='row'>
                     <div class='square' data-row='0' data-column='0'></div>
@@ -164,7 +170,7 @@ const View = (function() {
         node.insertAdjacentHTML('beforeend', gameView);
 
         squareNodes = node.querySelectorAll('.square');
-
+        winnerNode = node.querySelector('.winner');
         
         console.log('Initalized View');
     }
@@ -174,14 +180,13 @@ const View = (function() {
         squareNodes[squareIndex].innerText = text;
     }
 
-    const updateBoard = function(board) {
-        board.forEach((row, i) => {
-            row.forEach((text, j) => {
-                squareNodes[i * board[i].length + j].innerText = text;
-            });
+    const resetView = function() {
+        squareNodes.forEach(node => {
+            node.innerText = '';
         });
+        winnerNode.innerText = '';
     }
-    
+
     /**
      * @param {Number} i Outer index 
      * @param {Number} j Inner index
@@ -190,11 +195,18 @@ const View = (function() {
     const flattenIndex = function(i, j, n) {
         return i * n + j;
     }
+
+    const displayOutcome = function(winner) {
+        node.querySelector('.winner').innerText =
+            winner === 'draw' ? 'Draw' : 
+            `Player ${winner} wins`;
+    }
     
     return {
         initialize,
         updateSquare,
-        updateBoard
+        resetView,
+        displayOutcome
     };
 })();
 
