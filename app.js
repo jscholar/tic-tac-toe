@@ -223,9 +223,8 @@ const Controller = (function() {
                 Model.resetGameState();
             });
 
-        node.querySelectorAll('.square').forEach(squareNode => {
-            squareNode.addEventListener('click', squareClickHandler);
-        })
+        node.querySelector('.board')
+            .addEventListener('click', squareClickHandler);
         console.log('Initalized Controller');
     };
 
