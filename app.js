@@ -16,26 +16,38 @@ const Model = (function() {
     };
 
     const resetGameState = function() {
-        state.board = emtpyBoard.slice();
+        console.log('Reset game state');
+
+        // Deep copy the empty board
+        state.board = JSON.parse(JSON.stringify(emtpyBoard));
+
         state.currentPlayer = 'X';
         state.finished = false;
-        state.winner = null;
         state.movesPlayed = 0;
+        View.updateBoard(state.board);
     };
 
     const makeMove = function(row, column) {
-        row = Number(row);
-        column = Number(column);
-        state.board[row][column] = state.currentPlayer;
-        View.updateSquare(row, column, state.currentPlayer);
-
-        let waysWon = checkWinningBoard(state.board, row, column, state.currentPlayer);
-        if (waysWon.length > 0) {
-            // Won game
-            console.log(waysWon);
-        };
-
-        state.currentPlayer = state.currentPlayer === 'X' ? 'O' : 'X';
+        if (!state.finished) {
+            row = Number(row);
+            column = Number(column);
+            state.board[row][column] = state.currentPlayer;
+            View.updateSquare(row, column, state.currentPlayer);
+            state.movesPlayed++;
+    
+            let waysWon = checkWinningBoard(state.board, row, column, state.currentPlayer);
+            if (waysWon.length > 0) {
+                // Won game
+                state.finished = true;
+            } else {
+                if (state.movesPlayed === 9) {
+                    console.log('Game has drawn');
+                    state.finished = true;
+                } else {
+                    state.currentPlayer = state.currentPlayer === 'X' ? 'O' : 'X';
+                }
+            };
+        }
     };
 
     /**
@@ -161,6 +173,14 @@ const View = (function() {
         let squareIndex = flattenIndex(row, column, 3);
         squareNodes[squareIndex].innerText = text;
     }
+
+    const updateBoard = function(board) {
+        board.forEach((row, i) => {
+            row.forEach((text, j) => {
+                squareNodes[i * board[i].length + j].innerText = text;
+            });
+        });
+    }
     
     /**
      * @param {Number} i Outer index 
@@ -173,7 +193,8 @@ const View = (function() {
     
     return {
         initialize,
-        updateSquare
+        updateSquare,
+        updateBoard
     };
 })();
 
@@ -218,9 +239,9 @@ const App = (function() {
      * @param {HTMLElement} [node=body]
      */
     const initialize = function(node = document.querySelector('body')) {
-        Model.initialize();
         View.initialize(node);
         Controller.initialize(node);
+        Model.initialize();
         console.log('Tic-tac-toe has initialized');
     }
     
